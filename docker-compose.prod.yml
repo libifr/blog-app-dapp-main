@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./backend/
+    container_name: backend
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env.production
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./frontend/.env.production
+    depends_on:
+      - backend
